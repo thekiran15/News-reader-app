@@ -21,7 +21,7 @@ android.permissions = INTERNET,ACCESS_NETWORK_STATE
 android.api = 34
 android.minapi = 21
 android.ndk = 25b
-android.archs = arm64-v8a, armeabi-v7a
+android.archs = arm64-v8a
 
 # Keep the app data (history file) across updates
 android.allow_backup = True
