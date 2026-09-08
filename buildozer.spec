@@ -23,8 +23,6 @@ android.minapi = 21
 android.ndk = 25b
 android.archs = arm64-v8a, armeabi-v7a
 
-android.allow_backup = True
-
 # Keep the app data (history file) across updates
 android.allow_backup = True
 
