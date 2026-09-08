@@ -61,21 +61,8 @@ jobs:
           yes | buildozer android debug --help > /dev/null 2>&1 || true
 
       - name: Build APK with Buildozer
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 30
-          max_attempts: 3
-          retry_wait_seconds: 60
-          command: yes | buildozer -v android debug
-
-      - name: Save buildozer cache
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            ~/.buildozer
-            .buildozer
-          key: buildozer-${{ hashFiles('buildozer.spec') }}
+        run: |
+          yes | buildozer -v android debug
 
       - name: Upload APK artifact
         if: success()
