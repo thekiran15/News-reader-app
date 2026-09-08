@@ -1,5 +1,6 @@
 [app]
 
+p4a.local_recipes = ./p4a-recipes
 title = News Reader
 package.name = newsreader
 package.domain = org.yourname
