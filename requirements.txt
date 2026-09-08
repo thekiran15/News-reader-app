@@ -1,0 +1,5 @@
+kivy
+kivymd
+requests
+buildozer
+cython==0.29.36
