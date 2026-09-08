@@ -22,18 +22,25 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            git zip unzip openjdk-17-jdk python3-pip autoconf libtool \
+            git zip unzip autoconf libtool \
             pkg-config zlib1g-dev libncurses5-dev cmake libffi-dev \
-            libssl-dev build-essential ccache
+            libssl-dev build-essential ccache libltdl-dev
 
       - name: Install buildozer
         run: |
@@ -49,12 +56,25 @@ jobs:
           key: buildozer-${{ hashFiles('buildozer.spec') }}
           restore-keys: buildozer-
 
+      - name: Accept Android SDK licenses
+        run: |
+          yes | buildozer android debug --help > /dev/null 2>&1 || true
+
       - name: Build APK with Buildozer
         run: |
-          yes | buildozer android debug
+          yes | buildozer -v android debug
 
       - name: Upload APK artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: news-reader-apk
           path: bin/*.apk
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildozer-log
+          path: .buildozer/android/platform/build-*/build.log
+          if-no-files-found: ignore
