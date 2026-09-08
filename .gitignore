@@ -1,0 +1,7 @@
+.buildozer/
+bin/
+*.pyc
+__pycache__/
+.env
+*.keystore
+news_history.json
